@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <style>
+      /* styles.css */
+      body {
+          background-color: #045F5F;
+          font-family: Arial, sans-serif;
+          color: #ffffff; /* Change the text color to white */
+      }
+
+      .container {
+          margin-top: 50px;
+      }
+
+      h2 {
+          color: #ffffff; /* Change the heading color to white */
+          margin-bottom: 30px;
+      }
+
+      .form-control {
+          border-radius: 0.25rem;
+          border: 1px solid #ffffff; /* Change the border color to white */
+      }
+
+      .btn-primary {
+            color:white;
+          background-color: #007bff; /* Blue color for the Update button */
+          border-color: #007bff;
+            
+        }
+
+      .btn-primary:hover {
+         background-color: #007bff; /* Darker blue for hover state */
+          border-color: #007bff;
+      }
+
+      .table {
+          color: #ffffff; /* Change the text color of the table to white */
+          border: 1px solid #ffffff; /* Add border to the table */
+      }
+
+      .table th,
+      .table td {
+          border: 1px solid #ffffff; /* Add border to table cells */
+      }
+
+      .table thead th {
+          background-color: #034B4B; /* Darker background for the table header */
+      }
+
+      .table tbody tr:nth-child(even) {
+          background-color: #056767; /* Alternating row colors */
+      }
+
+      .table tbody tr:nth-child(odd) {
+          background-color: #045F5F;
+      }
+
+      .btn-update {
+      	 color:white;
+          background-color: #007bff; /* Blue color for the Update button */
+          border-color: #007bff;
+      }
+
+      .btn-update:hover {
+          background-color: #007bff; /* Darker blue for hover state */
+          border-color: #007bff;
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Employee List</h2>
+        <a class="btn btn-primary mb-2" th:href="@{/showNewEmployeeForm}">Add Employee</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th th:href="@{${sortField=='id' ? reverseSortDir : sortDir}}">ID</th>
+                    <th th:href="@{${sortField=='name' ? reverseSortDir : sortDir}}">Name</th>
+                    <th th:href="@{${sortField=='designation' ? reverseSortDir : sortDir}}">Designation</th>
+                    <th th:href="@{${sortField=='department' ? reverseSortDir : sortDir}}">Department</th>
+                    <th th:href="@{${sortField=='idNumber' ? reverseSortDir : sortDir}}">ID Number</th>
+                    <th th:href="@{${sortField=='address' ? reverseSortDir : sortDir}}">Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee : ${listEmployees}">
+                    <td th:text="${employee.id}"></td>
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.designation}"></td>
+                    <td th:text="${employee.department}"></td>
+                    <td th:text="${employee.idNumber}"></td>
+                    <td th:text="${employee.address}"></td>
+                    <td>
+                        <a class="btn btn-update btn-sm" th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Update</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div th:if="${totalPages > 1}">
+            <div class="row col-sm-10 pagination">
+                <div class="col-sm-2">
+                    Total Rows: [[${totalItems}]]
+                </div>
+                <div class="col-sm-1">
+                    <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+                        <span th:unless="${currentPage != i}">[[${i}]]</span>
+                    &nbsp; &nbsp;
+                    </span>
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
