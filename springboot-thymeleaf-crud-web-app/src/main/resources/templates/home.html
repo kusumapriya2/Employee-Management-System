@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #045F5F;
+        }
+        h1 {
+            color: #E6BF83;
+            font-family: "Times New Roman", Times, serif;
+            font-weight: 600;
+        }
+        p {
+            font-size: 1.1em;
+            color: white;
+            font-family: "Times New Roman", Times, serif;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            border-radius: 50px;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <br><br><br><br><br>
+                <h1>Welcome To</h1>
+                <h1>Employee Management System</h1>
+                <br>
+                <p>Efficiently manage your employee details and streamline operations.
+                    <br> Enhance productivity and foster a collaborative work environment with our system.
+                </p>
+                <div class="mt-4">
+                    <!-- Login Button -->
+                    <a class="btn btn-primary" th:href="@{/login}">Login</a>
+                    <!-- Signup Button -->
+                    <a class="btn btn-secondary ml-3" th:href="@{/register}">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

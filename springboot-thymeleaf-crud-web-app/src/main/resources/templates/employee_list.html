@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <style>
+        body {
+            background-color: #045F5F;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            color: #ffffff;
+            margin-bottom: 30px;
+        }
+        .table {
+            color: #ffffff;
+            border: 1px solid #ffffff;
+        }
+        .table th,
+        .table td {
+            border: 1px solid #ffffff;
+        }
+        .table thead th {
+            background-color: #034B4B;
+        }
+        .table tbody tr:nth-child(even) {
+            background-color: #056767;
+        }
+        .table tbody tr:nth-child(odd) {
+            background-color: #045F5F;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Employee List</h2>
+        <a class="btn btn-primary mb-2" th:href="@{/showNewEmployeeForm}">Add Employee</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th th:href="@{${sortField=='id' ? reverseSortDir : sortDir}}">ID</th>
+                    <th th:href="@{${sortField=='name' ? reverseSortDir : sortDir}}">Name</th>
+                    <th th:href="@{${sortField=='designation' ? reverseSortDir : sortDir}}">Designation</th>
+                    <th th:href="@{${sortField=='department' ? reverseSortDir : sortDir}}">Department</th>
+                    <th th:href="@{${sortField=='idNumber' ? reverseSortDir : sortDir}}">ID Number</th>
+                    <th th:href="@{${sortField=='address' ? reverseSortDir : sortDir}}">Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee : ${listEmployees}">
+                    <td th:text="${employee.id}"></td>
+                    <td th:text="${employee.name}"></td>
+                    <td th:text="${employee.designation}"></td>
+                    <td th:text="${employee.department}"></td>
+                    <td th:text="${employee.idNumber}"></td>
+                    <td th:text="${employee.address}"></td>
+                    <td>
+                        <a class="btn btn-update btn-sm" th:href="@{/showFormForUpdate/{id}(id=${employee.id})}">Update</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
